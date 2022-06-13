@@ -7,9 +7,9 @@
 
 import ctypes
 import numpy as np
-from ps2000 import ps2000 as ps
+from PLL_Lib.ps2000 import ps2000 as ps
 import matplotlib.pyplot as plt
-from PLLLib.src.functions import adc2mV, assert_pico2000_ok
+from PLL_Lib.functions import adc2mV, assert_pico2000_ok
 
 # Create status ready for use
 status = {}
