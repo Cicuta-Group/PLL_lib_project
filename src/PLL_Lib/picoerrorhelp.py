@@ -12,11 +12,13 @@ class CouldNotFindScopeException(Exception):
 class WrongContextException(Exception):
     def __init__(self):
         super().__init__(""
-                         "\nThe Picoscope object should be used inside a 'with' statement. See examples provided. Your code should resemble: \n"
+                         "\nThe Picoscope object should be used inside a 'with' statement. See examples provided.\nYour code should resemble: \n"
                          "with Picoscope() as scope:\n"
                          "      CODE GOES HERE, EG:\n"
                          "      times, voltages_A, voltages_B = scope.get_trace() \n"
-                         "      ...")
+                         "      ...\n"
+                         "(You will likely want to nest 'with' statements for the Picoscope and Arduino inside one another\n"
+                         "in order to use both simultaneously)")
 
 close_warning = "The picoscope was not disconnected properly by the program. You may have to disconnect and reconnect before reusing."
 
@@ -56,11 +58,30 @@ class InvalidTriggerVoltageException(Exception):
     def __init__(self, wrongvoltage, rightvoltage, rightvstring):
         super().__init__(
             f"\nThe argument '{wrongvoltage}' is not a valid voltage range. "
-            f"\nBased on the voltage range specified, '{rightvstring}', the trigger voltage must be between 0 and {rightvoltage} (in volts).")
+            f"\nBased on the voltage range specified, '{rightvstring}', the trigger voltage must be between {-rightvoltage} and {rightvoltage} (in volts).")
 
 
 class InvalidTriggerChannelException(Exception):
     def __init__(self, wrongarg):
         super().__init__(
-            f"\nThe argument '{wrongarg}' is not a valid trigger channel. "
-            f"\nYou should specify either 'A' or 'B' to trigger using those channels, or None (no quote marks) for no trigger (this is the default).")
+            f"\nThe argument '{wrongarg}' is not a valid key to wait for."
+            f"\nYou should give a single-letter string, such as 'a', 'b' etc, but not 'q' as 'q' is reserved for stopping the program.")
+
+class InvalidFrequencyException(Exception):
+    def __init__(self, wrongarg, maxfreq):
+        super().__init__(
+            f"\nThe argument '{wrongarg}' is not a frequency for the signal generator."
+            f"\nYou should give a number representing the frequency in Hz between 0 and {maxfreq}.")
+
+class InvalidWavetypeException(Exception):
+    def __init__(self, wrongarg, rightargs):
+        super().__init__(
+            f"\nThe argument '{wrongarg}' is not a valid wavetype. Valid arguments are: \n"
+            + str(list(rightargs))[1:-1])
+
+class InvalidSigGenVoltageException(Exception):
+    def __init__(self, wrongmin, wrongmax, maxfreq):
+        super().__init__(
+            f"\nThe arguments '{wrongmin}' and '{wrongmax} are not a valid set of bounding voltages."
+            f"\nYou should give two numbers, -{maxfreq} ≤ min_voltage ≤ max_voltage ≤ {maxfreq}, "
+            f"\nrepresenting the range of voltages of the generated signal in V.")
