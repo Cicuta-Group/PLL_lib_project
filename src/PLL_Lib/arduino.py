@@ -1,6 +1,9 @@
 import serial
 import serial.tools.list_ports
 import PLL_Lib.arduinoerrorhelp as er
+import time
+from importlib.metadata import version
+version = version('PLL_Lib')
 
 MAX_INT = 2147483647  # 2^31 - 1
 MIN_INT = -2147483647
@@ -41,7 +44,7 @@ class Arduino:
             # Find port automatically
             ports = list(serial.tools.list_ports.comports())
             for p in ports:
-                if 'arduino' in p.description.lower():
+                if 'arduino' in p.description.lower() or 'serial' in p.description.lower():
                     self.port = p.device
                     try:
                         self.arduino = serial.Serial(port=self.port, baudrate=9600, timeout=.1)
@@ -53,7 +56,9 @@ class Arduino:
                             raise er.UnexpectedConnectionException(self.port)
             else:
                 raise er.CouldNotFindArduinoException()
-        print(f'Connected to Arduino on port {self.port}.')
+        print(f'PLL_Lib version {version}: Connecting to Arduino on port {self.port}.')
+        time.sleep(3)
+        print(f'Connected to Arduino!')
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):

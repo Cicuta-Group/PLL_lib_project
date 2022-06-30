@@ -21,6 +21,8 @@ class Ps2000lib(Library):
 
 ps2000 = Ps2000lib()
 
+
+
 ps2000.PS2000_CHANNEL = make_enum([
     "PS2000_CHANNEL_A",
     "PS2000_CHANNEL_B",

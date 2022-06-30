@@ -8,6 +8,7 @@ All constants in this file are exposed directly on the Library class specific to
 (rather than importing this file directly) is the supported way of accessing them, since some
 older drivers have different names/values for some of the macros.
 """
+
 from PLL_Lib.errors import UnknownConstantError
 
 
@@ -26,7 +27,6 @@ def pico_num(tag):
         return PICO_STATUS[tag]
     except KeyError:
         raise UnknownConstantError("%s is not a known PICO_STATUS macro." % tag)
-
 
 def make_enum(members):
     """All C enums with no specific values follow the pattern 0, 1, 2... in the order they are in source."""

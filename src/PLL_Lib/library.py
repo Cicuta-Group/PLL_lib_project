@@ -16,12 +16,12 @@ import collections
 from PLL_Lib import constants
 import numpy
 
-from picosdk.errors import CannotFindPicoSDKError, CannotOpenPicoSDKError, DeviceNotFoundError, \
+from PLL_Lib.errors import CannotFindPicoSDKError, CannotOpenPicoSDKError, DeviceNotFoundError, \
     ArgumentOutOfRangeError, ValidRangeEnumValueNotValidForThisDevice, DeviceCannotSegmentMemoryError, \
     InvalidMemorySegmentsError, InvalidTimebaseError, InvalidTriggerParameters, InvalidCaptureParameters
 
 
-from picosdk.device import Device
+from PLL_Lib.device import Device
 
 
 """TimebaseInfo: A type for holding the particulars of a timebase configuration.

@@ -1,9 +1,10 @@
 import pyglet
+import pyglet.gl as gl
 import os
 import numpy as np
-import pyglet.gl as gl
 import ctypes
-import PLL_Lib
+from importlib.metadata import version
+version = version('PLL_Lib')
 
 border = 20
 
@@ -59,7 +60,7 @@ class ScopeDisplay:
         self.points_y_a, self.points_y_b = np.array([]), np.array([])
         self.setup_grid()
         self.labels = pyglet.graphics.Batch()
-        pyglet.text.Label(f'PycoScope version {PLL_Lib.__version__}. Press q to quit.',
+        pyglet.text.Label(f'PLL_Lib PycoScope version {version}. Press q to quit.',
                           font_name=font_name,
                           font_size=11,
                           x=border, y=window.height,
@@ -214,3 +215,6 @@ class ScopeDisplay:
     @property
     def done_waiting(self):
         return self._waiting_key is None
+
+    def close(self):
+        self.window.close()

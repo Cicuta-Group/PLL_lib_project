@@ -1,9 +1,11 @@
 import pyglet
+import pyglet.gl as gl
 import os
 import numpy as np
-import pyglet.gl as gl
 import ctypes
-import PLL_Lib
+
+
+version = '0.0.12'
 
 border = 20
 
@@ -59,7 +61,7 @@ class ScopeDisplay:
         self.points_y_a, self.points_y_b = np.array([]), np.array([])
         self.setup_grid()
         self.labels = pyglet.graphics.Batch()
-        pyglet.text.Label(f'PycoScope version {PLL_Lib.__version__}. Press q to quit.',
+        pyglet.text.Label(f'PycoScope version {version}. Press q to quit.',
                           font_name=font_name,
                           font_size=11,
                           x=border, y=window.height,

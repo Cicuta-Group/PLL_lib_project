@@ -5,7 +5,6 @@ from PLL_Lib.display import ScopeDisplay
 import warnings
 import time
 import numpy as np
-import progressbar
 from numbers import Number
 
 voltage_range_strings = {
@@ -145,14 +144,14 @@ class Picoscope:
 
     def __enter__(self):
         self._used_in_with = True
+        print('Connecting to Picoscope...')
         check_success(ps.ps2000_open_unit_async())
         self._chandle, progress = ct.c_int16(), ct.c_int16()
         start_time = time.time()
-        with progressbar.ProgressBar(max_value=100, prefix='Loading Scope: ') as bar:
-            while ps.ps2000_open_unit_progress(ct.byref(self._chandle), ct.byref(progress)) == 0:
-                if time.time() - start_time > load_timeout: raise er.CouldNotFindScopeException()
-                bar.update(progress.value)
+        while ps.ps2000_open_unit_progress(ct.byref(self._chandle), ct.byref(progress)) == 0:
+            if time.time() - start_time > load_timeout: raise er.CouldNotFindScopeException()
         check_success(ps.ps2000PingUnit(self._chandle), er.CouldNotFindScopeException)
+        print('Connected to Picoscope!')
 
         # self._chandle = check_success(ps.ps2000_open_unit(), er.CouldNotFindScopeException)
         # enabled = 1, coupling type = PS2000_DC = 1, analogue offset = 0 V, channel = PS2000_CHANNEL_A = 0
