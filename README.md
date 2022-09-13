@@ -2,7 +2,7 @@
 
 This package is available on PyPi:
 
-'pip install PLL-Lib'
+`pip install PLL-Lib`
 
 This package is written for the benefit of students taking the 'Phase Locked Loops' Part II experiment as part of the Physics course at Cambridge University.
 
