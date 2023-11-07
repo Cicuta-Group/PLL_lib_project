@@ -1,2 +1,6 @@
 /src/PLL_Lib.egg-info/
 /build/
+
+.pipy_publish_credentials
+
+dist/
