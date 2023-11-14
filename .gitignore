@@ -1,2 +1,3 @@
 /src/PLL_Lib.egg-info/
 /build/
+*.pyc

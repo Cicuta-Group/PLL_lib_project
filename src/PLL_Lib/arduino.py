@@ -19,7 +19,7 @@ class Arduino:
 
         return wrapper
 
-    def __init__(self, port=None):
+    def __init__(self, port=None, baudrate=9600, timeout=0.1):
         '''
         Create a wrapper for the serial interface to an arduino.
         :param port: (Optional) The name of the serial port the arduino is connected to, eg 'COM5'.
@@ -32,7 +32,7 @@ class Arduino:
         self._used_in_with = True
         if self.port is not None:
             try:
-                self.arduino = serial.Serial(port=self.port, baudrate=9600, timeout=.1)
+                self.arduino = serial.Serial(port=self.port, baudrate=baudrate, timeout=timeout)
             except Exception as e:
                 if "PermissionError" in e.args[0]:
                     raise er.PortInUseException(self.port)
@@ -74,3 +74,22 @@ class Arduino:
         if type(code) is not int or not (MIN_INT <= code <= MAX_INT):
             raise er.InvalidCodeException(code, MIN_INT, MAX_INT)
         self.arduino.write(bytes(str(code)+'\n', 'utf-8'))
+
+    @_check_with
+    def send_string(self, string: str):
+        '''
+        Send a string to the arduino.
+        :param String: A string to be sent. 
+        '''
+        message = bytes(string+'\n', 'utf-8')
+        print(f'Sending message to arduino: {message}')
+        self.arduino.write(bytes(string+'\n', 'utf-8'))
+    
+    @_check_with
+    def readline(self):
+        '''
+        Read a string from the arduino.
+        :param String: A string to be sent. 
+        '''
+        return self.arduino.readline().decode('utf-8').rstrip()
+    
