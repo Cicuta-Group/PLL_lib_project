@@ -1,3 +1,10 @@
 /src/PLL_Lib.egg-info/
 /build/
+<<<<<<< HEAD
 *.pyc
+=======
+
+.pipy_publish_credentials
+
+dist/
+>>>>>>> 06c4e1c158d4959184dd5c3f5da0340e2e49bcfd

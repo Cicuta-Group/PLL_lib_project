@@ -1,4 +1,4 @@
-# PLL_Lib version 1.0.0
+# PLL_Lib
 
 This package is available on PyPi:
 
